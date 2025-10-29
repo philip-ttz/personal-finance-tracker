@@ -17,7 +17,7 @@ export function CategoryManager({ categories, addCategory, removeCategory, updat
       <h2 className="font-semibold text-slate-700">Category Management</h2>
 
       <div className="flex gap-2 w-full">
-        <input type="text" value={newCat} onChange={e => setNewCat(e.target.value)} placeholder="New Category" className="border px-2 py-1 rounded flex-1 min-w-0" />
+        <input type="text" value={newCat} onChange={e => setNewCat(e.target.value)} placeholder="New Category" className="outline-none border-2 rounded-md px-2 py-1 text-slate-500 w-full focus:border-blue-300 flex-1 min-w-0" />
         <button onClick={() => { if(newCat.trim()){ addCategory(newCat.trim()); setNewCat(""); }}} className="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white px-2 py-1 rounded shrink-0">Add</button>
       </div>
 
