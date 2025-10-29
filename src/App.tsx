@@ -4,7 +4,6 @@ import { TransactionForm } from './components/TransactionForm'
 import type { Transaction } from './types/Transaction'
 import { TransactionList } from './components/TransactionList'
 import { CategoryManager } from './components/CategoryManager'
-import { renderToPipeableStream } from 'react-dom/server'
 
 function App() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
