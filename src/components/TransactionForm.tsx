@@ -4,9 +4,10 @@ type TransactionType = 'income' | 'expense';
 
 interface TransactionFormProps {
   addTransaction: (type: TransactionType, amount: number, date: string, category: string, account: string, tag: string) => void;
+    categories: string[];
 }
 
-export function TransactionForm({ addTransaction }: TransactionFormProps) {
+export function TransactionForm({ addTransaction, categories }: TransactionFormProps) {
   const [type, setType] = useState<TransactionType>('income');
   const [amount, setAmount] = useState<number>(0);
   const [date, setDate] = useState<string>('');
@@ -57,13 +58,15 @@ export function TransactionForm({ addTransaction }: TransactionFormProps) {
         />
         </div>
         <div>
-        <input
-            value={category}
+        <select value={category}
             onChange={(e) => setCategory(e.target.value)}
-            placeholder="Category"
             className="outline-none border-2 rounded-md px-2 py-1 text-slate-500 w-full focus:border-blue-300"
-            required
-        />
+            required>
+            <option value="">Choose Category</option>
+            {categories.map((cat, index) => (
+              <option key={index} value={cat}>{cat}</option>
+            ))}
+        </select>
         </div>
         <div>
         <input
