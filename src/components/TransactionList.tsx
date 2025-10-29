@@ -6,32 +6,7 @@ interface TransactionListProps {
   removeTransaction: (id: number) => void;
 }
 
-/*export function TransactionList({ transactions, removeTransaction }: TransactionListProps) {
-    if (transactions.length === 0) {
-    return <p className="text-center text-slate-500 mt-4">No transactions available.</p>;
-  }
-
-    return (
-        <ul className="mt-4 space-y-2 max-h-64 overflow-y-auto">
-      {transactions.map((transaction) => (
-        <li key={transaction.id} className="flex justify-between items-center border-b pb-2">
-          <div>
-            <p className="text-slate-700 font-medium">{transaction.type === 'income' ? 'Income' : 'Expense'}: ${transaction.amount.toFixed(2)}</p>
-            <p className="text-slate-500 text-sm">{transaction.date} | {transaction.category} | {transaction.account} | {transaction.tag}</p>
-          </div>
-          <button
-            onClick={() => removeTransaction(transaction.id)}
-            className="text-red-500 hover:text-red-700 text-sm"
-          >
-            Remove
-          </button>
-        </li>
-      ))}
-    </ul>
-    );
-}*/
 export function TransactionList({ transactions, removeTransaction }: TransactionListProps) {
-  // Transaktionen nach Typ trennen
   const incomes = transactions.filter(tx => tx.type === "income");
   const expenses = transactions.filter(tx => tx.type === "expense");
 

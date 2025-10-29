@@ -17,7 +17,11 @@ function App() {
       account,
       tag,
     };
-    setTransactions([...transactions, newTransaction]);
+    setTransactions(prev => {
+      const updated = [...prev, newTransaction];
+      updated.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      return updated;
+    });
     console.log('Transaction Added:', newTransaction);
   }
 
