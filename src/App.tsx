@@ -10,6 +10,8 @@ function App() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [categories, setCategories] = useState<string[]>(["rent", "groceries", "salary", "entertainment"]);
   const [activeTab, setActiveTab] = useState("dashboard");
+  const [recentlyDeleted, setRecentlyDeleted] = useState<Transaction | null>(null);
+  const [showUndo, setShowUndo] = useState(false);
 
   const addTransaction = (type: 'income' | 'expense', amount: number, date: string, category: string, account: string, tag: string) => {
     const newTransaction: Transaction = {
@@ -30,8 +32,33 @@ function App() {
   }
 
   const removeTransaction = (id: number) => {
-    setTransactions(transactions.filter(transaction => transaction.id !== id));
+    const txToRemove = transactions.find(tx => tx.id === id);
+    if(!txToRemove) return;
+
+    const confirmed = window.confirm("Do you really want to delete this transaction?");
+    if(!confirmed) return;
+
+    setTransactions(prev => prev.filter(tx => tx.id !== id));
+    setRecentlyDeleted(txToRemove);
+    setShowUndo(true);
+
+    setTimeout(() => {
+      setShowUndo(false);
+      setRecentlyDeleted(null);
+    }, 5000);
   }
+
+  const undoDelete = () => {
+    if(recentlyDeleted) {
+      setTransactions(prev => {
+        const updated = [...prev, recentlyDeleted!];
+        updated.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        return updated;
+      });
+      setRecentlyDeleted(null);
+      setShowUndo(false);
+    }
+  };
 
   const addCategory = (category: string) => {
     if (!categories.includes(category)) {
@@ -81,6 +108,18 @@ function App() {
         </div>
       )}
       </div>
+
+      {showUndo && (
+        <div className="fixed bottom-6 right-6 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg flex items-center space-x-3">
+          <span className="text-sm">Transaction deleted.</span>
+          <button
+            onClick={undoDelete}
+            className="text-blue-400 hover:text-blue-300 font-semibold text-sm"
+          >
+            Undo
+          </button>
+        </div>
+      )}
     </>
   )
 }
