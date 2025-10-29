@@ -24,4 +24,64 @@ html {
   display: grid;
   grid-template-columns: 300px 1fr;
   gap: 50px;
+  height: calc(100vh-60px);
+}
+
+/* Tablet (unter 1024px) → Sidebar oben, Liste unten */
+@media (max-width: 1024px) {
+  #root {
+    display: flex;
+    flex-direction: column;
+  }
+  .content-area {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    padding: 30px;
+    gap: 30px;
+  }
+  aside {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 20px;
+    width: 100%;
+  }
+  aside > .title {
+    display: none;
+  }
+}
+
+/* Smartphone (unter 640px) → engeres Layout */
+@media (max-width: 640px) {
+  .content-area {
+    padding: 16px;
+    gap: 20px;
+  }
+
+  aside {
+    padding: 16px !important;
+  }
+
+  main {
+    padding: 0;
+  }
+
+  button {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 550px) {
+  aside {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  main > div,
+  main > div > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 }

@@ -27,7 +27,7 @@ export function TransactionForm({ addTransaction, categories }: TransactionFormP
 
     return (
         <>
-      <div className="flex flex-col justify-center items-center space-y-2">
+      <div className="flex flex-col justify-center items-center space-y-2 title">
         <h2 className="text-m font-medium text-slate-700">Personal Finance Tracker</h2>
       </div>
       <form onSubmit={handleSubmit} className="w-full mt-4 space-y-3 text-sm">
