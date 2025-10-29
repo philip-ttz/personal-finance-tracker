@@ -1,11 +1,27 @@
 @import "tailwindcss";
 
+html {
+  scrollbar-gutter: stable;
+}
+
 #root {
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 100%;
+  grid-template-areas: "navbar" "content";
   gap: 20px;
   width: 100%;
   min-height: 100vh;
   gap: 50px;
-  padding: 50px;
+  padding: 20px 50px;
+}
+.navbar-area {
+  grid-area: navbar;
+  width: 100%;
+}
+.content-area {
+  grid-area: content;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 50px;
 }
