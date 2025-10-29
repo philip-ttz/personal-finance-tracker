@@ -46,7 +46,7 @@ function App() {
   return (
     <>
     
-      <aside className='w-80 rounded-lg shadow h-auto p-6 bg-white relative overflow-hidden space-y-6'>
+      <aside className='w-70 rounded-lg shadow h-auto p-6 bg-white relative overflow-hidden space-y-6'>
         <TransactionForm addTransaction={addTransaction} categories={categories} />
         <CategoryManager
           categories={categories}

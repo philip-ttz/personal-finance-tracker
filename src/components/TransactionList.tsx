@@ -38,7 +38,7 @@ export function TransactionList({ transactions, removeTransaction }: Transaction
     <div className="grid grid-cols-[8fr_1fr] gap-4 p-4 w-full">
         <div className='grid grid-cols-2 gap-4'>
       <div className="space-y-2 p-4">
-        <h2 className="text-sm font-semibold text-green-700 mb-2">Incomes</h2>
+        <h2 className="text-m font-semibold text-green-700 mb-2">Incomes</h2>
         {incomes.length === 0 && <p className="text-gray-500 text-xs">No incomes</p>}
         {incomes.map(tx => (
           <div
@@ -60,7 +60,7 @@ export function TransactionList({ transactions, removeTransaction }: Transaction
       </div>
 
       <div className="space-y-2 p-4 ">
-        <h2 className="text-sm font-semibold text-red-700 mb-2">Expenses</h2>
+        <h2 className="text-m font-semibold text-red-700 mb-2">Expenses</h2>
         {expenses.length === 0 && <p className="text-gray-500 text-xs">No expenses</p>}
         {expenses.map(tx => (
           <div

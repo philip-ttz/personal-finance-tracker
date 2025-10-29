@@ -28,9 +28,9 @@ export function TransactionForm({ addTransaction, categories }: TransactionFormP
     return (
         <>
       <div className="flex flex-col justify-center items-center space-y-2">
-        <h2 className="text-2xl font-medium text-slate-700">Personal Finance Tracker</h2>
+        <h2 className="text-m font-medium text-slate-700">Personal Finance Tracker</h2>
       </div>
-      <form onSubmit={handleSubmit} className="w-full mt-4 space-y-3">
+      <form onSubmit={handleSubmit} className="w-full mt-4 space-y-3 text-sm">
         <div>
           <select value={type} onChange={(e) => setType(e.target.value as TransactionType)} className="outline-none border-2 rounded-md px-2 py-1 text-slate-500 w-full focus:border-blue-300">
             <option value="income">Income</option>

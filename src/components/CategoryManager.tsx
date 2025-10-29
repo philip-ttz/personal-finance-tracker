@@ -13,7 +13,7 @@ export function CategoryManager({ categories, addCategory, removeCategory, updat
     const [editValue, setEditValue] = useState<string>('');
 
     return (
-        <div className="bg-white p-4 rounded shadow space-y-2">
+        <div className="bg-white p-4 rounded shadow space-y-2 text-sm">
       <h2 className="font-semibold text-slate-700">Category Management</h2>
 
       <div className="flex gap-2 w-full">
@@ -33,8 +33,8 @@ export function CategoryManager({ categories, addCategory, removeCategory, updat
             ) : (
               <>
                 <span className="flex-1 truncate text-slate-700" title={cat}>{cat}</span>
-                <button onClick={() => { setEditing(cat); setEditValue(cat); }} className="bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 px-2 py-1 rounded shrink-0">Edit</button>
-                <button onClick={() => removeCategory(cat)} className="bg-red-500 hover:bg-red-600 active:bg-red-700 text-white px-2 py-1 rounded shrink-0">Delete</button>
+                <button onClick={() => { setEditing(cat); setEditValue(cat); }} className="bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 px-1 py-1 rounded shrink-0 text-xs">Edit</button>
+                <button onClick={() => removeCategory(cat)} className="bg-red-500 hover:bg-red-600 active:bg-red-700 text-white px-1 py-1 rounded shrink-0 text-xs">Delete</button>
               </>
             )}
           </li>
