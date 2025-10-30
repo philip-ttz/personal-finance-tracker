@@ -35,11 +35,11 @@ export function TransactionList({ transactions, removeTransaction }: Transaction
   const expenses = filteredTransactions.filter(tx => tx.type === "expense");
 
   return (
-    <div className="grid grid-cols-[8fr_1fr] gap-4 p-4 w-full">
+    <div className="grid grid-cols-[8fr_1fr] gap-4 w-full">
         <div className='grid grid-cols-2 gap-4'>
-      <div className="space-y-2 p-4">
-        <h2 className="text-m font-semibold text-green-700 mb-2">Incomes</h2>
-        {incomes.length === 0 && <p className="text-gray-500 text-xs">No incomes</p>}
+      <div className="space-y-2 p-4 bg-green-100/20 rounded-2xl">
+        <h2 className="text-m font-semibold text-green-400 mb-2">Incomes</h2>
+        {incomes.length === 0 && <p className="text-gray-300 text-xs">No incomes</p>}
         {incomes.map(tx => (
           <div
             key={tx.id}
@@ -59,9 +59,9 @@ export function TransactionList({ transactions, removeTransaction }: Transaction
         ))}
       </div>
 
-      <div className="space-y-2 p-4 ">
-        <h2 className="text-m font-semibold text-red-700 mb-2">Expenses</h2>
-        {expenses.length === 0 && <p className="text-gray-500 text-xs">No expenses</p>}
+      <div className="space-y-2 p-4 bg-red-100/20 rounded-2xl">
+        <h2 className="text-m font-semibold text-red-400 mb-2">Expenses</h2>
+        {expenses.length === 0 && <p className="text-gray-300 text-xs">No expenses</p>}
         {expenses.map(tx => (
           <div
             key={tx.id}
@@ -82,8 +82,8 @@ export function TransactionList({ transactions, removeTransaction }: Transaction
       </div>
     </div>
 
-    <div className="bg-white p-4 rounded-lg shadow space-y-3 h-fit w-35">
-        <h3 className="font-semibold text-slate-700 mb-2 text-sm">Filter</h3>
+    <div className="backdrop-blur-md border border-white/30  bg-gray-300/10 p-4 rounded-2xl shadow space-y-3 h-fit w-35 ">
+        <h3 className="font-semibold text-white text-slate-700 mb-2 text-sm">Filter</h3>
 
         <div className="flex flex-col gap-2">
           {(["all", "date", "account", "category"] as const).map((type) => (
@@ -91,7 +91,7 @@ export function TransactionList({ transactions, removeTransaction }: Transaction
               key={type}
               onClick={() => setFilterType(type)}
               className={`px-3 py-1 rounded text-sm ${
-                filterType === type ? "bg-blue-600 text-white" : "bg-gray-200 hover:bg-gray-300"
+                filterType === type ? "bg-blue-600/50 text-white" : "bg-gray-750/50 hover:bg-blue-600/20 text-white"
               }`}
             >
               {type === "all"
@@ -111,13 +111,13 @@ export function TransactionList({ transactions, removeTransaction }: Transaction
               type="date"
               value={filterValues.startDate}
               onChange={(e) => setFilterValues({ ...filterValues, startDate: e.target.value })}
-              className="border px-2 py-1 rounded text-sm"
+              className="text-white border px-2 py-1 rounded text-sm"
             />
             <input
               type="date"
               value={filterValues.endDate}
               onChange={(e) => setFilterValues({ ...filterValues, endDate: e.target.value })}
-              className="border px-2 py-1 rounded text-sm w-full"
+              className="text-white border px-2 py-1 rounded text-sm w-full"
             />
           </div>
         )}
@@ -126,7 +126,7 @@ export function TransactionList({ transactions, removeTransaction }: Transaction
           <select
             value={filterValues.account}
             onChange={(e) => setFilterValues({ ...filterValues, account: e.target.value })}
-            className="border px-2 py-1 rounded text-sm w-full mt-3"
+            className="text-white border px-2 py-1 rounded text-sm w-full mt-3"
           >
             <option value="">All accounts</option>
             {uniqueAccounts.map((acc) => (
@@ -141,7 +141,7 @@ export function TransactionList({ transactions, removeTransaction }: Transaction
           <select
             value={filterValues.category}
             onChange={(e) => setFilterValues({ ...filterValues, category: e.target.value })}
-            className="border px-2 py-1 rounded text-sm w-full mt-3"
+            className="text-white border px-2 py-1 rounded text-sm w-full mt-3"
           >
             <option value="">All categories</option>
             {uniqueCategories.map((cat) => (

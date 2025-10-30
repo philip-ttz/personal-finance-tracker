@@ -80,7 +80,7 @@ function App() {
     <div className='content-area'>
       {activeTab === "dashboard" && (
         <>
-      <aside className='w-70 rounded-lg shadow h-auto p-6 bg-white relative overflow-hidden space-y-6'>
+      <aside className='w-70 text-white rounded-2xl shadow h-auto p-6 relative overflow-hidden space-y-6 backdrop-blur-md border border-white/30 w-full bg-gray-300/10'>
         <TransactionForm addTransaction={addTransaction} categories={categories} />
         <CategoryManager
           categories={categories}

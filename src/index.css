@@ -4,6 +4,11 @@ html {
   scrollbar-gutter: stable;
 }
 
+body {
+  background: #3b4b46;
+  background: linear-gradient(135deg, #3b4b46, #1b242a);
+}
+
 #root {
   display: grid;
   grid-template-rows: auto 1fr;
@@ -27,7 +32,20 @@ html {
   height: calc(100vh-60px);
 }
 
-/* Tablet (unter 1024px) → Sidebar oben, Liste unten */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  display: none;
+}
+
+input[type="date"]::-moz-calendar-picker-indicator {
+  opacity: 0;
+  display: none;
+}
+
+input[type="date"]::-webkit-inner-spin-button {
+  display: none;
+}
+
 @media (max-width: 1024px) {
   #root {
     display: flex;

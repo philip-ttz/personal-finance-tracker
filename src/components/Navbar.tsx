@@ -8,7 +8,7 @@ interface NavbarProps {
 export function Navbar({ activeTab, setActiveTab }: NavbarProps) {
     const tabs = ["dashboard", "budgeting", "reports"];
     return (
-        <nav className="w-full bg-blue-600 text-white py-3 shadow-md flex justify-center space-x-8 rounded">
+        <nav className="backdrop-blur-md border border-white/30 w-full bg-gray-300/10 text-white py-3 shadow-md flex justify-center space-x-8 rounded-2xl">
       {tabs.map(tab => (
         <button
           key={tab}
