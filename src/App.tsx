@@ -6,6 +6,7 @@ import { TransactionList } from './components/TransactionList'
 import { CategoryManager } from './components/CategoryManager'
 import { Navbar } from './components/Navbar'
 import { Budgeting } from "./components/Budgeting"
+import { Reports } from "./components/Reports"
 
 function App() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -14,6 +15,7 @@ function App() {
   const [recentlyDeleted, setRecentlyDeleted] = useState<Transaction | null>(null);
   const [showUndo, setShowUndo] = useState(false);
   const [budgets, setBudgets] = useState<Record<string, number>>({});
+  const [reportsView, setReportsView] = useState<"month" | "year">('month');
 
   const addTransaction = (type: 'income' | 'expense', amount: number, date: string, category: string, account: string, tag: string) => {
     const newTransaction: Transaction = {
@@ -112,11 +114,8 @@ function App() {
         <Budgeting transactions={transactions} categories={categories}  budgets={budgets} onAddBudget={handleAddBudget} onRemoveBudget={handleRemoveBudget} />
       )}
 
-      {activeTab === "Auswertungen" && (
-        <div className="p-8">
-          <h2 className="text-2xl font-semibold text-slate-700 mb-4">Auswertungen</h2>
-          <p className="text-slate-500">Hier erscheinen später Diagramme, Übersichten und Statistiken.</p>
-        </div>
+      {activeTab === "reports" && (
+        <Reports transactions={transactions} categories={categories} view={reportsView} setView={setReportsView} />
       )}
       
 
