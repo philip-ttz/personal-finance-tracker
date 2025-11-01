@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './App.css'
 import { TransactionForm } from './components/TransactionForm'
 import type { Transaction } from './types/Transaction'
@@ -17,6 +17,47 @@ function App() {
   const [showUndo, setShowUndo] = useState(false);
   const [budgets, setBudgets] = useState<Record<string, number>>({});
   const [reportsView, setReportsView] = useState<"month" | "year">('month');
+
+  useEffect(() => {
+    try{
+    const storedTransactions = localStorage.getItem('transactions');
+    if (storedTransactions) {
+      setTransactions(JSON.parse(storedTransactions));
+    }
+    const storedCategories = localStorage.getItem('categories');
+    if (storedCategories) {
+      setCategories(JSON.parse(storedCategories));
+    }
+    const storedBudgets = localStorage.getItem('budgets');
+    if (storedBudgets) {
+      setBudgets(JSON.parse(storedBudgets));
+    }
+    const storedActiveTab = localStorage.getItem('activeTab');
+    if (storedActiveTab) {
+      setActiveTab(storedActiveTab);
+    }
+    const storedReportsView = localStorage.getItem('reportsView');
+    if (storedReportsView === 'month' || storedReportsView === 'year') {
+      setReportsView(storedReportsView);
+    }} catch (e) {
+      console.error("Error loading from localStorage", e);
+    }
+  }, []);
+  useEffect(() => {
+    localStorage.setItem('transactions', JSON.stringify(transactions));
+  }, [transactions]);
+  useEffect(() => {
+    localStorage.setItem('categories', JSON.stringify(categories));
+  }, [categories]);
+  useEffect(() => {
+    localStorage.setItem('budgets', JSON.stringify(budgets));
+  }, [budgets]);
+  useEffect(() => {
+    localStorage.setItem('activeTab', activeTab);
+  }, [activeTab]);
+  useEffect(() => {
+    localStorage.setItem('reportsView', reportsView);
+  }, [reportsView]);
 
   const addTransaction = (type: 'income' | 'expense', amount: number, date: string, category: string, account: string, tag: string) => {
     const newTransaction: Transaction = {
