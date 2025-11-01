@@ -7,6 +7,7 @@ import { CategoryManager } from './components/CategoryManager'
 import { Navbar } from './components/Navbar'
 import { Budgeting } from "./components/Budgeting"
 import { Reports } from "./components/Reports"
+import { motion, AnimatePresence } from "framer-motion";
 
 function App() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -90,34 +91,79 @@ function App() {
 
   return (
     <>
-    <div className='navbar-area'>
-      <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
-    </div>
-    
-      {activeTab === "dashboard" && (
-        <div className='content-area'>
-      <aside className='w-70 text-white rounded-2xl shadow h-auto p-6 relative overflow-hidden space-y-6 backdrop-blur-md border border-white/30 w-full bg-gray-300/10'>
-        <TransactionForm addTransaction={addTransaction} categories={categories} />
-        <CategoryManager
-          categories={categories}
-          addCategory={addCategory}
-          removeCategory={removeCategory}
-          updateCategory={updateCategory}
-        />
-      </aside>
-      <main>
-      <TransactionList transactions={transactions} removeTransaction={removeTransaction} />
-    </main>
+      <div className="navbar-area">
+        <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
       </div>
-      )}
-      {activeTab === "budgeting" && (
-        <Budgeting transactions={transactions} categories={categories}  budgets={budgets} onAddBudget={handleAddBudget} onRemoveBudget={handleRemoveBudget} />
-      )}
 
-      {activeTab === "reports" && (
-        <Reports transactions={transactions} categories={categories} view={reportsView} setView={setReportsView} />
-      )}
-      
+      <div className="relative overflow-hidden content-wrapper">
+        <AnimatePresence mode="wait">
+          {activeTab === "dashboard" && (
+            <motion.div
+              key="dashboard"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              <div className="content-area">
+                <aside className="w-70 text-white rounded-2xl shadow h-auto p-6 relative overflow-hidden space-y-6 backdrop-blur-md border border-white/30 w-full bg-gray-300/10">
+                  <TransactionForm
+                    addTransaction={addTransaction}
+                    categories={categories}
+                  />
+                  <CategoryManager
+                    categories={categories}
+                    addCategory={addCategory}
+                    removeCategory={removeCategory}
+                    updateCategory={updateCategory}
+                  />
+                </aside>
+                <main>
+                  <TransactionList
+                    transactions={transactions}
+                    removeTransaction={removeTransaction}
+                  />
+                </main>
+              </div>
+            </motion.div>
+          )}
+
+          {activeTab === "budgeting" && (
+            <motion.div
+              key="budgeting"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              <Budgeting
+                transactions={transactions}
+                categories={categories}
+                budgets={budgets}
+                onAddBudget={handleAddBudget}
+                onRemoveBudget={handleRemoveBudget}
+              />
+            </motion.div>
+          )}
+
+          {activeTab === "reports" && (
+            <motion.div
+              key="reports"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              <Reports
+                transactions={transactions}
+                categories={categories}
+                view={reportsView}
+                setView={setReportsView}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
 
       {showUndo && (
         <div className="fixed bottom-6 right-6 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg flex items-center space-x-3">
@@ -131,7 +177,7 @@ function App() {
         </div>
       )}
     </>
-  )
+  );
 }
 
 export default App
