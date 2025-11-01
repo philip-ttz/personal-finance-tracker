@@ -5,6 +5,7 @@ import type { Transaction } from './types/Transaction'
 import { TransactionList } from './components/TransactionList'
 import { CategoryManager } from './components/CategoryManager'
 import { Navbar } from './components/Navbar'
+import { Budgeting } from "./components/Budgeting"
 
 function App() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -12,6 +13,7 @@ function App() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [recentlyDeleted, setRecentlyDeleted] = useState<Transaction | null>(null);
   const [showUndo, setShowUndo] = useState(false);
+  const [budgets, setBudgets] = useState<Record<string, number>>({});
 
   const addTransaction = (type: 'income' | 'expense', amount: number, date: string, category: string, account: string, tag: string) => {
     const newTransaction: Transaction = {
@@ -72,14 +74,26 @@ function App() {
     setCategories(categories.map(cat => (cat === oldCategory ? newCategory : cat)));
   }
 
+  const handleAddBudget = (category: string, amount: number) => {
+    setBudgets((prev) => ({ ...prev, [category]: amount }));
+  };
+
+  const handleRemoveBudget = (category: string) => {
+    setBudgets((prev) => {
+      const copy = { ...prev };
+      delete copy[category];
+      return copy;
+    });
+  };
+
   return (
     <>
     <div className='navbar-area'>
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
     </div>
-    <div className='content-area'>
+    
       {activeTab === "dashboard" && (
-        <>
+        <div className='content-area'>
       <aside className='w-70 text-white rounded-2xl shadow h-auto p-6 relative overflow-hidden space-y-6 backdrop-blur-md border border-white/30 w-full bg-gray-300/10'>
         <TransactionForm addTransaction={addTransaction} categories={categories} />
         <CategoryManager
@@ -92,13 +106,10 @@ function App() {
       <main>
       <TransactionList transactions={transactions} removeTransaction={removeTransaction} />
     </main>
-      </>
+      </div>
       )}
-      {activeTab === "Budgetierung" && (
-        <div className="p-8">
-          <h2 className="text-2xl font-semibold text-slate-700 mb-4">Budgetverwaltung</h2>
-          <p className="text-slate-500">Hier kannst du später Budgets pro Kategorie festlegen und Warnungen konfigurieren.</p>
-        </div>
+      {activeTab === "budgeting" && (
+        <Budgeting transactions={transactions} categories={categories}  budgets={budgets} onAddBudget={handleAddBudget} onRemoveBudget={handleRemoveBudget} />
       )}
 
       {activeTab === "Auswertungen" && (
@@ -107,7 +118,7 @@ function App() {
           <p className="text-slate-500">Hier erscheinen später Diagramme, Übersichten und Statistiken.</p>
         </div>
       )}
-      </div>
+      
 
       {showUndo && (
         <div className="fixed bottom-6 right-6 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg flex items-center space-x-3">
