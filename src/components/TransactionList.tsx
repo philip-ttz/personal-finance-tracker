@@ -18,6 +18,27 @@ export function TransactionList({ transactions, removeTransaction }: Transaction
   const uniqueAccounts = Array.from(new Set(transactions.map(tx => tx.account)));
   const uniqueCategories = Array.from(new Set(transactions.map(tx => tx.category)));
 
+const resetActiveFilter = () => {
+  if (filterType === 'date') {
+    setFilterValues(prev => ({ ...prev, startDate: '', endDate: '' }));
+  } else if (filterType === 'account') {
+    setFilterValues(prev => ({ ...prev, account: '' }));
+  } else if (filterType === 'category') {
+    setFilterValues(prev => ({ ...prev, category: '' }));
+  }
+};
+
+const resetAllFilters = () => {
+  setFilterType('all');
+  setFilterValues({
+    startDate: '',
+    endDate: '',
+    account: '',
+    category: '',
+  });
+};
+
+
   const filteredTransactions = transactions.filter((tx) => {
     if (filterType === 'date') {
         if (filterValues.startDate && tx.date < filterValues.startDate) return false;
@@ -151,6 +172,20 @@ export function TransactionList({ transactions, removeTransaction }: Transaction
             ))}
           </select>
         )}
+        <div className="flex flex-col gap-2 mt-4">
+    <button
+      onClick={resetActiveFilter}
+      className="bg-gray-500/60 hover:bg-yellow-500/30 text-white text-xs rounded-md py-1 transition"
+    >
+      Reset current filter
+    </button>
+    <button
+      onClick={resetAllFilters}
+      className="bg-gray-500/60 hover:bg-red-500/30 text-white text-xs rounded-md py-1 transition"
+    >
+      Reset all filters
+    </button>
+  </div>
       </div>
     </div>
   );
