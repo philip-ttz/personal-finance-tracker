@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import { TransactionForm } from './components/TransactionForm'
 import type { Transaction } from './types/Transaction'
