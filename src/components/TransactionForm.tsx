@@ -10,8 +10,8 @@ interface TransactionFormProps {
 export function TransactionForm({ addTransaction, categories }: TransactionFormProps) {
   const [type, setType] = useState<TransactionType>('income');
   const [amount, setAmount] = useState<number>(0);
-  const [date, setDate] = useState<string>('');
-  const [category, setCategory] = useState<string>('');
+  const [date, setDate] = useState<string>(new Date().toISOString().split('T')[0]);
+  const [category, setCategory] = useState<string>(categories[0]);
   const [account, setAccount] = useState<string>('');
   const [tag, setTag] = useState<string>('');
 
@@ -19,10 +19,6 @@ export function TransactionForm({ addTransaction, categories }: TransactionFormP
     e.preventDefault();
     addTransaction(type, amount, date, category, account, tag);
     setAmount(0);
-    setDate('');
-    setCategory('');
-    setAccount('');
-    setTag('');
   };
 
     return (
@@ -33,8 +29,8 @@ export function TransactionForm({ addTransaction, categories }: TransactionFormP
       <form onSubmit={handleSubmit} className="w-full mt-4 space-y-3 text-sm">
         <div>
           <select value={type} onChange={(e) => setType(e.target.value as TransactionType)} className="outline-none border-2 text-white/80 rounded-md px-2 py-1 text-slate-500 w-full focus:border-blue-300">
-            <option value="income">Income</option>
-            <option value="expense">Expense</option>
+            <option value="income" className='text-black'>Income</option>
+            <option value="expense" className='text-black'>Expense</option>
         </select>
         </div>
         <div>
@@ -62,9 +58,8 @@ export function TransactionForm({ addTransaction, categories }: TransactionFormP
             onChange={(e) => setCategory(e.target.value)}
             className="outline-none border-2 rounded-md px-2 py-1 text-white/80 text-slate-500 w-full focus:border-blue-300"
             required>
-            <option value="">Choose Category</option>
             {categories.map((cat, index) => (
-              <option key={index} value={cat}>{cat}</option>
+              <option key={index} value={cat} className='text-black'>{cat}</option>
             ))}
         </select>
         </div>
@@ -74,7 +69,6 @@ export function TransactionForm({ addTransaction, categories }: TransactionFormP
             onChange={(e) => setAccount(e.target.value)}
             placeholder="Account"
             className="outline-none border-2 rounded-md px-2 py-1 text-white/80 text-slate-500 w-full focus:border-blue-300"
-            required
         />
         </div>
         <div>

@@ -15,7 +15,7 @@ export function TransactionList({ transactions, removeTransaction }: Transaction
     category: '',
   });
 
-  const uniqueAccounts = Array.from(new Set(transactions.map(tx => tx.account)));
+  const uniqueAccounts = Array.from(new Set(transactions.map(tx => tx.account))).filter(account => account.trim() !== "");
   const uniqueCategories = Array.from(new Set(transactions.map(tx => tx.category)));
 
 const resetActiveFilter = () => {
@@ -149,9 +149,9 @@ const resetAllFilters = () => {
             onChange={(e) => setFilterValues({ ...filterValues, account: e.target.value })}
             className="text-white border px-2 py-1 rounded text-sm w-full mt-3"
           >
-            <option value="">All accounts</option>
+            <option value="" className='text-black'>All accounts</option>
             {uniqueAccounts.map((acc) => (
-              <option key={acc} value={acc}>
+              <option key={acc} value={acc} className='text-black'>
                 {acc}
               </option>
             ))}
@@ -164,9 +164,9 @@ const resetAllFilters = () => {
             onChange={(e) => setFilterValues({ ...filterValues, category: e.target.value })}
             className="text-white border px-2 py-1 rounded text-sm w-full mt-3"
           >
-            <option value="">All categories</option>
+            <option value="" className='text-black'>All categories</option>
             {uniqueCategories.map((cat) => (
-              <option key={cat} value={cat}>
+              <option key={cat} value={cat} className='text-black'>
                 {cat}
               </option>
             ))}
