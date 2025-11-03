@@ -1,73 +1,79 @@
-# React + TypeScript + Vite
+# Personal Finance Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Ein **Personal Finance Tracker** gebaut mit **React**, **TypeScript**, **TailwindCSS** und **Framer Motion**.  
+Er ermöglicht das **Verwalten von Transaktionen**, **Kategorien**, **Budgets** und **Auswertungen**, mit **lokaler Speicherung im Browser (LocalStorage)**.
+Vorschau bei https://personal-finance-tracker-010.netlify.app/.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Setup & Installation
 
-## React Compiler
+### Voraussetzungen
+- Node.js (≥ 18)
+- npm oder pnpm
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Installation
+```bash
+# Repository klonen
+git clone <REPO_URL>
+cd personal-finance-tracker
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Abhängigkeiten installieren
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Entwicklung starten
+```bash
+npm run dev
 ```
+
+Anschließend [http://localhost:5173](http://localhost:5173) öffnen.
+
+---
+
+## 🧩 Architektur-Kurzbeschreibung
+
+Die App ist modular aufgebaut und in **mehrere React-Komponenten** unterteilt:
+
+| Modul / Komponente | Beschreibung |
+|--------------------|--------------|
+| `App.tsx` | Zentrale Steuerung der Tabs (Dashboard, Budgeting, Reports). Speichert globalen State und verwaltet LocalStorage. |
+| `Navbar.tsx` | Navigationsleiste mit smoothen Übergängen zwischen Tabs. |
+| `TransactionForm.tsx` | Formular zum Erfassen neuer Transaktionen. |
+| `TransactionList.tsx` | Tabelle mit allen Transaktionen, inklusive Filtermöglichkeiten. |
+| `CategoryManager.tsx` | CRUD-System zur Verwaltung der Kategorien. |
+| `Budgeting.tsx` | Übersicht über gesetzte Budgets mit Fortschrittsanzeige und Warnung bei Überschreitung. |
+| `Reports.tsx` | Darstellung von Auswertungen (Monatsübersicht, Kategorie-Breakdown, Verlauf). |
+| `localStorage`-Integration | Alle Daten (Transaktionen, Kategorien, Budgets) werden im Browser persistent gespeichert. |
+
+---
+
+## 🧠 Datenmodell
+
+### Transaktion
+```ts
+interface Transaction {
+  id: number;
+  type: 'income' | 'expense';
+  amount: number;
+  date: string;
+  category: string;
+  account: string;
+  tag: string;
+}
+```
+
+---
+
+## 💾 Persistenz
+
+Die Anwendung verwendet **LocalStorage** zur Datenspeicherung:
+
+### Lade- & Speicherlogik
+Beim Laden der App:
+- Die Daten werden aus `localStorage` gelesen und in den React-State geladen.
+
+Bei jeder Änderung (z. B. neue Transaktion, Kategorie, Budget):
+- Der aktuelle Zustand wird automatisch wieder in `localStorage` geschrieben.
+
+Dadurch bleiben Daten auch nach einem Neuladen oder Neustart des Browsers erhalten.
