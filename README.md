@@ -31,7 +31,7 @@ Anschließend [http://localhost:5173](http://localhost:5173) öffnen.
 
 ---
 
-## 🧩 Architektur-Kurzbeschreibung
+## Architektur-Kurzbeschreibung
 
 Die App ist modular aufgebaut und in **mehrere React-Komponenten** unterteilt:
 
@@ -48,7 +48,7 @@ Die App ist modular aufgebaut und in **mehrere React-Komponenten** unterteilt:
 
 ---
 
-## 🧠 Datenmodell
+## Datenmodell
 
 ### Transaktion
 ```ts
@@ -65,7 +65,7 @@ interface Transaction {
 
 ---
 
-## 💾 Persistenz
+## Persistenz
 
 Die Anwendung verwendet **LocalStorage** zur Datenspeicherung:
 
